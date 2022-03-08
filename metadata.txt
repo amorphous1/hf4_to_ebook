@@ -1,0 +1,8 @@
+---
+# see https://pandoc.org/MANUAL.html#epub-metadata and https://community.rstudio.com/t/manual-font-control-when-kniting-rmarkdown-to-ms-word/19608/2
+title: High Frontier 4 All Living Rules
+author: Phil Eklund
+description: custom ebook version of the living rules for High Frontier 4 All
+lang: en-US
+css: style.css
+...
