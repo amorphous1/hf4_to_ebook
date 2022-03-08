@@ -3,19 +3,20 @@ import re
 from operator import itemgetter
 from collections import defaultdict
 
-hf4_input_files = ["../hf4_core.pdf", "../hf4_appendix.pdf", "../hf4_module1.pdf", "../hf4_module2.pdf"]
+hf4_input_files = ["../hf4_core.pdf", "../hf4_appendix.pdf", "../hf4_module1.pdf", "../hf4_module2.pdf", "../hf4_module3.pdf"]
 hf4_margin_width = 128
 hf4_font_to_markup = {
-    "MyriadPro-Light": "", "MyriadPro-Regular": "", "MyriadPro-Black": "",  # regular fonts
-    "MyriadPro-Semibold": "**", "MyriadPro-Bold": "**",                     # bold fonts
-    "MyriadPro-BoldCondIt": "_", "MyriadPro-BoldIt": "_",                   # bold italic fonts (marked up just italic)
-    "MyriadPro-It": "_", "MyriadPro-LightIt": "_", "MyriadPro-It-SC700": "_",  # italic fonts
+    "MyriadPro-Light": "", "MyriadPro-Regular": "", "MyriadPro-Black": "",              # regular fonts
+    "MyriadPro-Semibold": "**", "MyriadPro-Bold": "**", "MyriadPro-BoldSemiCn": "*",    # bold fonts
+    "MyriadPro-SemiboldCond": "*", "MyriadPro-SemiboldSemiCn": "*",
+    "MyriadPro-BoldCondIt": "_", "MyriadPro-BoldIt": "_", "MyriadPro-SemiboldIt": "_",  # bold italic fonts
+    "MyriadPro-It": "_", "MyriadPro-LightIt": "_", "MyriadPro-It-SC700": "_",           # italic fonts
     "MyriadPro-BoldCond": "",           # used for examples, marked up as blockquote instead
     "AstronomicSignsSt": "<starsign>",  # special character font, see hf4_letter_to_starsign
 }
 hf4_letter_to_starsign = {
-    # Venus   Mercury   Mars      Jupyter   Saturn    Uranus    Neptune   Ceres     Earth
-    "C": "♀", "D": "☿", "E": "♂", "F": "♃", "G": "♄", "H": "♅", "J": "♆", "K": "⚳", "M": "♁", " ": " ",
+    #         Venus     Mercury   Mars      Jupyter   Saturn    Uranus    Neptune   Ceres               Earth
+    "B": "⊙", "C": "♀", "D": "☿", "E": "♂", "F": "♃", "G": "♄", "H": "⛢", "J": "♆", "K": "⚳", "L": "♁", "M": "⊕", " ": " ",
 }
 hf4_page_to_extra_rects = defaultdict(list, {
     24: [{'top': 475, 'bottom': 723, 'x0': 41, 'y0': 841.9 - 723, 'x1': 552, 'y1': 841.9 - 475}],
@@ -101,7 +102,7 @@ def no_transparent_text(obj): return obj["object_type"] != "char" or len(obj["no
 
 
 def extract_page(a4page, a4pagenum):
-    if a4pagenum == 2 or (111 < a4pagenum < 203) or (226 < a4pagenum < 303) or (a4pagenum > 325):
+    if a4pagenum == 2 or (111 < a4pagenum < 203) or (226 < a4pagenum < 303) or (325 < a4pagenum < 403):
         return ""  # exclude tables of contents, card descriptions, and essays
 
     footnote_hline_top = max([line["top"] for line in a4page.lines if line["width"] > 400], default=a4page.height)
