@@ -117,7 +117,7 @@ def extract_page(a4page, a4pagenum):
 
 
 if __name__ == "__main__":  # `pip3 freeze > requirements.txt` to export dependencies to file
-    with open("hf4.md", "w") as out:  # `pandoc hf4.md -o hf4.epub metadata.txt --toc-depth=2` to generate
+    with open("hf4.md", "w", encoding="utf-8") as out:  # `pandoc hf4.md -o hf4.epub metadata.txt --toc-depth=2` to generate
         for docnum, doc in enumerate(hf4_input_files):
             with pdfplumber.open(doc) as pdf:
                 for pagenum, page in enumerate(pdf.pages[1:-1]):  # exclude unnecessary first and last A4 pages
